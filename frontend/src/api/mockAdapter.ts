@@ -20,7 +20,7 @@ export const setupMockAdapter = (api: AxiosInstance) => {
         if (url.includes('/auth/authenticate') || url.includes('/auth/login')) {
             return {
                 data: {
-                    token: 'mock-jwt-token-12345-demo-mode',
+                    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZW1vQGVudGVycHJpc2UuY29tIiwibmFtZSI6IkRlbW8gVXNlciIsInJvbGUiOiJVU0VSIiwiZXhwIjo0MDk5NjgwMDAwfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c', // Valid JWT exp 2099
                     ...MOCK_USER
                 },
                 status: 200
@@ -48,7 +48,7 @@ export const setupMockAdapter = (api: AxiosInstance) => {
         if (url.includes('/auth/authenticate') || url.includes('/auth/login')) {
             return {
                 data: {
-                    token: 'mock-jwt-token-for-demo-mode',
+                    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZW1vQGVudGVycHJpc2UuY29tIiwibmFtZSI6IkRlbW8gVXNlciIsInJvbGUiOiJVU0VSIiwiZXhwIjo0MDk5NjgwMDAwfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
                     user: MOCK_USER,
                 },
                 status: 200,
