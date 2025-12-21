@@ -15,6 +15,17 @@ export const setupMockAdapter = (api: AxiosInstance) => {
         if (url.includes('/auth/profile') || url.includes('/users/me')) {
             return { data: MOCK_USER, status: 200 };
         }
+
+        // Login Endpoint
+        if (url.includes('/auth/authenticate') || url.includes('/auth/login')) {
+            return {
+                data: {
+                    token: 'mock-jwt-token-12345-demo-mode',
+                    ...MOCK_USER
+                },
+                status: 200
+            };
+        }
         if (url.includes('/projects/stats')) {
             return { data: MOCK_STATS, status: 200 };
         }
