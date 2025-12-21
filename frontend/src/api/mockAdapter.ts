@@ -30,10 +30,28 @@ export const setupMockAdapter = (api: AxiosInstance) => {
             return { data: MOCK_STATS, status: 200 };
         }
         if (url.includes('/projects')) {
-            return { data: MOCK_PROJECTS, status: 200 };
+            return {
+                data: {
+                    content: MOCK_PROJECTS,
+                    totalElements: MOCK_PROJECTS.length,
+                    totalPages: 1,
+                    size: 10,
+                    number: 0
+                },
+                status: 200
+            };
         }
         if (url.includes('/tasks')) {
-            return { data: MOCK_TASKS, status: 200 };
+            return {
+                data: {
+                    content: MOCK_TASKS,
+                    totalElements: MOCK_TASKS.length,
+                    totalPages: 1,
+                    size: 10,
+                    number: 0
+                },
+                status: 200
+            };
         }
 
         // Fallback to real API if no mock match (optional)
