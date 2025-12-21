@@ -1,4 +1,4 @@
-import { AxiosInstance } from 'axios';
+import type { AxiosInstance } from 'axios';
 import { MOCK_USER, MOCK_PROJECTS, MOCK_TASKS, MOCK_STATS } from './mockData';
 
 export const setupMockAdapter = (api: AxiosInstance) => {
@@ -8,7 +8,7 @@ export const setupMockAdapter = (api: AxiosInstance) => {
     const originalPost = api.post;
 
     // Override GET
-    api.get = async (url: string, config?: any) => {
+    api.get = (async (url: string, config?: any) => {
         console.log(`[MOCK API] GET ${url}`);
         await delay(400); // Simulate network latency
 
@@ -27,10 +27,10 @@ export const setupMockAdapter = (api: AxiosInstance) => {
 
         // Fallback to real API if no mock match (optional)
         return originalGet(url, config);
-    };
+    }) as any;
 
     // Override POST
-    api.post = async (url: string, data?: any, config?: any) => {
+    api.post = (async (url: string, data?: any, config?: any) => {
         console.log(`[MOCK API] POST ${url}`, data);
         await delay(600);
 
@@ -62,7 +62,7 @@ export const setupMockAdapter = (api: AxiosInstance) => {
         }
 
         return originalPost(url, data, config);
-    };
+    }) as any;
 
     // Add PUT/DELETE if needed, for now mainly read-only demo
     console.log('✨ MOCK API ADAPTER ENABLED ✨');
