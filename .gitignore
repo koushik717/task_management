@@ -1,0 +1,15 @@
+
+# Root gitignore
+.DSTore
+.idea
+*.iml
+test-results/
+
+# Backend
+backend/target/
+backend/*.log
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
