@@ -4,6 +4,11 @@ import { MOCK_USER, MOCK_PROJECTS, MOCK_TASKS, MOCK_STATS } from './mockData';
 export const setupMockAdapter = (api: AxiosInstance) => {
     const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+    // Stateful storage for the session
+    let innerProjects = [...MOCK_PROJECTS];
+    let innerTasks = [...MOCK_TASKS];
+    let innerStats = { ...MOCK_STATS };
+
     const originalGet = api.get;
     const originalPost = api.post;
 
@@ -84,10 +89,29 @@ export const setupMockAdapter = (api: AxiosInstance) => {
 
         // Optimistic create for projects/tasks (ephemeral)
         if (url.includes('/projects')) {
-            return { data: { ...data, id: Math.floor(Math.random() * 1000) }, status: 201 };
+            const newProject = {
+                ...data,
+                id: Math.floor(Math.random() * 10000) + 200, // Random ID > 200
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                status: 'PLANNING',
+                progress: 0
+            };
+            innerProjects.unshift(newProject);
+            innerStats.totalProjects++;
+            innerStats.activeProjects++;
+            return { data: newProject, status: 201 };
         }
         if (url.includes('/tasks')) {
-            return { data: { ...data, id: Math.floor(Math.random() * 1000) }, status: 201 };
+            const newTask = {
+                ...data,
+                id: Math.floor(Math.random() * 10000) + 2000,
+                status: 'TODO'
+            };
+            innerTasks.unshift(newTask);
+            innerStats.totalTasks++;
+            innerStats.pendingTasks++;
+            return { data: newTask, status: 201 };
         }
 
         return originalPost(url, data, config);
