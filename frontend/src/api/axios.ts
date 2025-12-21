@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import { setupMockAdapter } from './mockAdapter';
 
 interface ApiErrorResponse {
     message: string;
@@ -15,6 +16,11 @@ const api = axios.create({
         'Content-Type': 'application/json',
     },
 });
+
+// Initialize Mock Adapter for Vercel/Demo Mode
+if (import.meta.env.VITE_USE_MOCKS === 'true') {
+    setupMockAdapter(api);
+}
 
 api.interceptors.request.use(
     (config) => {
