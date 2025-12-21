@@ -18,7 +18,7 @@ const api = axios.create({
 });
 
 // Initialize Mock Adapter for Vercel/Demo Mode
-if (import.meta.env.VITE_USE_MOCKS === 'true') {
+if (import.meta.env.VITE_USE_MOCKS === 'true' || window.location.hostname.includes('vercel.app')) {
     setupMockAdapter(api);
 }
 
