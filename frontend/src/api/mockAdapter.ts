@@ -37,8 +37,8 @@ export const setupMockAdapter = (api: AxiosInstance) => {
         if (url.includes('/projects')) {
             return {
                 data: {
-                    content: MOCK_PROJECTS,
-                    totalElements: MOCK_PROJECTS.length,
+                    content: innerProjects,
+                    totalElements: innerProjects.length,
                     totalPages: 1,
                     size: 10,
                     number: 0
@@ -46,11 +46,26 @@ export const setupMockAdapter = (api: AxiosInstance) => {
                 status: 200
             };
         }
-        if (url.includes('/tasks')) {
+        // Specific Project Tasks
+        if (url.match(/\/tasks\/project\/\d+/)) {
+            const projectId = parseInt(url.split('/').pop()?.split('?')[0] || '0');
+            const projectTasks = innerTasks.filter(t => t.projectId === projectId || (url.includes('assigned') && t.assigneeId === 1));
             return {
                 data: {
-                    content: MOCK_TASKS,
-                    totalElements: MOCK_TASKS.length,
+                    content: projectTasks,
+                    totalElements: projectTasks.length,
+                    totalPages: 1,
+                    size: 10,
+                    number: 0
+                },
+                status: 200
+            };
+        }
+        if (url.includes('/tasks') || url.includes('/tasks/assigned')) {
+            return {
+                data: {
+                    content: innerTasks,
+                    totalElements: innerTasks.length,
                     totalPages: 1,
                     size: 10,
                     number: 0
@@ -102,6 +117,38 @@ export const setupMockAdapter = (api: AxiosInstance) => {
             innerStats.activeProjects++;
             return { data: newProject, status: 201 };
         }
+
+        // Match /tasks/project/:projectId
+        if (url.match(/\/tasks\/project\/\d+/)) {
+            const projectId = parseInt(url.split('/').pop() || '0');
+            const newTask = {
+                ...data,
+                id: Math.floor(Math.random() * 10000) + 2000,
+                status: 'TODO',
+                projectId: projectId,
+                assigneeId: 1,
+                dueDate: new Date().toISOString()
+            };
+            innerTasks.unshift(newTask);
+            innerStats.totalTasks++;
+            innerStats.pendingTasks++;
+            return { data: newTask, status: 201 };
+        }
+
+        // PATCH Task Status
+        if (url.match(/\/tasks\/\d+\/status/)) {
+            // Extract Status from query param
+            const statusMatch = url.match(/status=([^&]+)/);
+            const status = statusMatch ? statusMatch[1] : 'TODO';
+            const taskIdMatch = url.match(/\/tasks\/(\d+)\/status/);
+            if (taskIdMatch && taskIdMatch[1]) {
+                const tId = parseInt(taskIdMatch[1]);
+                const task = innerTasks.find(t => t.id === tId);
+                if (task) task.status = status;
+            }
+            return { data: { status }, status: 200 };
+        }
+
         if (url.includes('/tasks')) {
             const newTask = {
                 ...data,
