@@ -48,7 +48,13 @@ const Login: React.FC = () => {
             navigate('/');
         } catch (err: any) {
             console.error(err);
-            setError('Demo login failed. Please retry.');
+            if (err.response) {
+                setError(`Login failed: ${err.response.status} - ${err.response.data?.message || err.message}`);
+            } else if (err.request) {
+                setError(`Network Error: No response from server. Check CORS or Backend URL.`);
+            } else {
+                setError(`Error: ${err.message}`);
+            }
         } finally {
             setLoading(false);
         }
