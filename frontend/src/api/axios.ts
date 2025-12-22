@@ -11,14 +11,14 @@ interface ApiErrorResponse {
 }
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || '/api/v1',
+    baseURL: (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080') + '/api/v1',
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
-// Initialize Mock Adapter for Vercel/Demo Mode
-if (import.meta.env.VITE_USE_MOCKS === 'true' || window.location.hostname.includes('vercel.app')) {
+// Initialize Mock Adapter only if explicitly requested
+if (import.meta.env.VITE_USE_MOCKS === 'true') {
     setupMockAdapter(api);
 }
 
