@@ -27,28 +27,29 @@ public class DataSeeder implements CommandLineRunner {
 
         @Override
         public void run(String... args) throws Exception {
-                if (userRepository.findByEmail("demo@enterprise.com").isPresent()) {
-                        log.info("Demo user already exists. Skipping seeding.");
+                seedUser("admin_demo@taskflow.com", "Demo@1234", Role.ADMIN, "Admin User");
+                seedUser("user_demo@taskflow.com", "Demo@1234", Role.USER, "Demo User");
+
+                log.info("Demo data seeding check complete!");
+        }
+
+        private void seedUser(String email, String password, Role role, String name) {
+                if (userRepository.findByEmail(email).isPresent()) {
+                        log.info("User {} already exists. Skipping.", email);
                         return;
                 }
 
-                log.info("Seeding demo data...");
-
-                // 1. Create Demo User
-                User demoUser = User.builder()
-                                .name("Demo User")
-                                .email("demo@enterprise.com")
-                                .password(passwordEncoder.encode("password"))
-                                .role(Role.USER)
+                log.info("Seeding user: {}", email);
+                User user = User.builder()
+                                .name(name)
+                                .email(email)
+                                .password(passwordEncoder.encode(password))
+                                .role(role)
                                 .build();
-                userRepository.save(demoUser);
+                userRepository.save(user);
 
-                // 2. Create Projects
-                createMarketingCampaign(demoUser);
-                createProductRoadmap(demoUser);
-                createWebsiteRedesign(demoUser);
-
-                log.info("Demo data seeded successfully!");
+                // Create some default data for valid users
+                createMarketingCampaign(user);
         }
 
         private void createMarketingCampaign(User user) {
