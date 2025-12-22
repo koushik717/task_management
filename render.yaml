@@ -18,8 +18,10 @@ services:
         value: 8080
       - key: JWT_SECRET
         generateValue: true
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update # Force schema creation
       - key: JAVA_TOOL_OPTIONS
-        value: "-Xmx300m -Dserver.port=8080" # Memory limit for free tier
+        value: "-Xmx300m -Dserver.port=8080"
         
       # Database Connection Components
       - key: DB_HOST
