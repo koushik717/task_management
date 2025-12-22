@@ -2,11 +2,24 @@
 
 A production-ready, full-stack task management system architected for scalability, reliability, and developer experience.
 
-![Dashboard Preview](/assets/dashboard-preview.png)
+## 📸 Screenshots
+
+| **Interactive Dashboard** | **Kanban Workflow** |
+|:---:|:---:|
+| ![Dashboard](/assets/dashboard.png) | ![Kanban Board](/assets/kanban.png) |
+
+> **Note**: These screenshots demonstrate the premium "Glassmorphism" UI implemented in the final build.
 
 ## 🚀 Live Demo & Credentials
-**Try the app instantly (No Signup Required): [https://mock-taskflow-demo.vercel.app](https://mock-taskflow-demo.vercel.app)**
+**Try the app instantly (No Signup Required): [https://task-frontend-demo-q902jmghp-koushiks-projects-b74e30c6.vercel.app](https://task-frontend-demo-q902jmghp-koushiks-projects-b74e30c6.vercel.app)**
 
+> **⚠️ Important Note (Cold Start)**: The backend is hosted on Render's Free Tier. It may "sleep" after 15 minutes of inactivity. **The first request might take 30-50 seconds to wake it up.** Please be patient! ☕
+
+### 🎥 Demo Video
+[![Watch the Demo](https://img.youtube.com/vi/placeholder/0.jpg)](https://www.youtube.com/watch?v=placeholder)
+*(Video coming soon...)*
+
+### 🔑 Demo Credentials
 | Role | Email | Password | Access Level |
 |------|-------|----------|--------------|
 | **Admin** | `admin_demo@taskflow.com` | `Demo@1234` | Full Read/Write access to all projects |
