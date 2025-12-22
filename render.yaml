@@ -16,14 +16,36 @@ services:
         value: prod
       - key: SERVER_PORT
         value: 8080
-      - key: SPRING_DATASOURCE_URL
-        fromDatabase:
-          name: enterprise-db
-          property: connectionString
       - key: JWT_SECRET
         generateValue: true
+      - key: JAVA_TOOL_OPTIONS
+        value: "-Xmx300m -Dserver.port=8080" # Memory limit for free tier
+        
+      # Database Connection Components
+      - key: DB_HOST
+        fromDatabase:
+          name: enterprise-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: enterprise-db
+          property: port
+      - key: DB_USER
+        fromDatabase:
+          name: enterprise-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: enterprise-db
+          property: password
+      - key: DB_NAME
+        fromDatabase:
+          name: enterprise-db
+          property: database
+
+      # Redis (Optional)
       - key: SPRING_DATA_REDIS_HOST
-        value: redis # Optional holder
+        value: redis 
       - key: SPRING_DATA_REDIS_PORT
         value: 6379 
     healthCheckPath: /actuator/health
