@@ -40,7 +40,7 @@ public class SecurityConfig {
         public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
                 org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
                 configuration.setAllowedOriginPatterns(java.util.List.of(
-                                "https://task-frontend-demo.vercel.app",
+                                "https://*.vercel.app",
                                 "http://localhost:5173",
                                 "http://localhost:3000"));
                 configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
