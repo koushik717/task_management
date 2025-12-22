@@ -2,7 +2,17 @@
 
 A production-ready, full-stack task management system architected for scalability, reliability, and developer experience.
 
-![Dashboard Preview](https://via.placeholder.com/800x400?text=Dashboard+Preview+Coming+Soon)
+![Dashboard Preview](/assets/dashboard-preview.png)
+
+## 🚀 Live Demo & Credentials
+**Try the app instantly (No Signup Required): [https://mock-taskflow-demo.vercel.app](https://mock-taskflow-demo.vercel.app)**
+
+| Role | Email | Password | Access Level |
+|------|-------|----------|--------------|
+| **Admin** | `admin_demo@taskflow.com` | `Demo@1234` | Full Read/Write access to all projects |
+| **User** | `user_demo@taskflow.com` | `Demo@1234` | Restricted access to assigned tasks |
+
+> **Note**: The demo runs on a read-only database instance that resets every 24 hours.
 
 ## 🏗️ System Architecture
 

@@ -1,0 +1,31 @@
+services:
+  # Managed PostgreSQL
+  - type: psql
+    name: enterprise-db
+    region: ohio
+    plan: free
+    ipAllowList: [] # Open to all for demo simplicity, or restrict if needed
+
+  # Spring Boot Backend
+  - type: web
+    name: enterprise-backend
+    runtime: docker
+    region: ohio
+    plan: free
+    rootDir: backend
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SERVER_PORT
+        value: 8080
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: enterprise-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SPRING_DATA_REDIS_HOST
+        value: redis # Optional: If you add Reddy/Redis later
+      - key: SPRING_DATA_REDIS_PORT
+        value: 6379 
+    healthCheckPath: /actuator/health

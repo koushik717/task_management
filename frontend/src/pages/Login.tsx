@@ -33,11 +33,67 @@ const Login: React.FC = () => {
         }
     };
 
+    const handleDemoLogin = async (role: 'ADMIN' | 'USER') => {
+        const demoEmail = role === 'ADMIN' ? 'admin_demo@taskflow.com' : 'user_demo@taskflow.com';
+        const demoPass = 'Demo@1234';
+
+        setEmail(demoEmail);
+        setPassword(demoPass);
+
+        setLoading(true);
+        try {
+            await new Promise(r => setTimeout(r, 600));
+            const response = await api.post('/auth/authenticate', { email: demoEmail, password: demoPass });
+            login(response.data.token);
+            navigate('/');
+        } catch (err: any) {
+            console.error(err);
+            setError('Demo login failed. Please retry.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <AuthLayout
             title="Welcome Back"
             subtitle="Sign in to your account to continue"
         >
+            <div className="bg-indigo-500/20 text-indigo-200 border border-indigo-500/30 p-3 rounded-lg mb-6 text-center text-sm font-semibold shadow-lg shadow-indigo-500/10">
+                🚀 Try demo in 10 seconds. No signup needed.
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mb-6">
+                <button
+                    onClick={() => handleDemoLogin('ADMIN')}
+                    type="button"
+                    className="p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl flex flex-col items-center gap-2 transition-all group"
+                >
+                    <div className="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
+                        <LogIn className="w-4 h-4" />
+                    </div>
+                    <div className="text-center">
+                        <div className="text-sm font-medium text-white">Admin Demo</div>
+                        <div className="text-[10px] text-gray-400">Full Access</div>
+                    </div>
+                </button>
+                <button
+                    onClick={() => handleDemoLogin('USER')}
+                    type="button"
+                    className="p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl flex flex-col items-center gap-2 transition-all group"
+                >
+                    <div className="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
+                        <LogIn className="w-4 h-4" />
+                    </div>
+                    <div className="text-center">
+                        <div className="text-sm font-medium text-white">User Demo</div>
+                        <div className="text-[10px] text-gray-400">Limited Access</div>
+                    </div>
+                </button>
+            </div>
+
+            <div className="text-center my-4 text-xs text-gray-400 uppercase">Or sign in with email</div>
+
             {error && (
                 <div className="bg-red-500/10 border border-red-500/50 text-red-200 p-3 rounded-lg mb-6 text-sm">
                     {error}
