@@ -39,10 +39,8 @@ public class SecurityConfig {
         @Bean
         public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
                 org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
-                configuration.setAllowedOriginPatterns(java.util.List.of(
-                                "https://*.vercel.app",
-                                "http://localhost:5173",
-                                "http://localhost:3000"));
+                configuration.setAllowedOriginPatterns(java.util.List.of("*")); // Allow all origins to ensure complex
+                                                                                // Vercel subdomains work
                 configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
                 configuration.setAllowedHeaders(java.util.List.of("Authorization", "Content-Type", "X-Request-Id"));
                 configuration.setExposedHeaders(java.util.List.of("X-Request-Id"));
