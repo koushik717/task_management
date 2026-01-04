@@ -21,8 +21,9 @@ const api = axios.create({
     },
 });
 
-// Initialize Mock Adapter only if explicitly requested
-if (import.meta.env.VITE_USE_MOCKS === 'true') {
+// Initialize Mock Adapter (Forced for Resume Demo)
+const FORCE_MOCK = true;
+if (FORCE_MOCK || import.meta.env.VITE_USE_MOCKS === 'true') {
     setupMockAdapter(api);
 }
 
