@@ -1,15 +1,24 @@
-
-# Root gitignore
-.DSTore
-.idea
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
 *.iml
-test-results/
+.classpath
+.project
+.settings/
 
-# Backend
-backend/target/
-backend/*.log
+# Java
+target/
+*.class
 
-# Frontend
-frontend/node_modules/
-frontend/dist/
-frontend/.env.local
+# Maven
+.mvn/wrapper/maven-wrapper.properties
+
+# Secrets
+.env
+.env.*
+token.json
+*.pem
+*.key
+secrets.properties
